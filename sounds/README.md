@@ -1,18 +1,18 @@
-# ไฟล์เสียงจริงของเครื่องดนตรี
+# เสียงจริงของเครื่องดนตรี
 
-วางไฟล์เสียงในโฟลเดอร์นี้ ตั้งชื่อตาม id ของไพ่ (นามสกุล .mp3 / .ogg / .wav / .m4a อย่างใดอย่างหนึ่ง)
-ไพ่ที่ไม่มีไฟล์จะใช้เสียงสังเคราะห์แทนอัตโนมัติ
+ไฟล์ .m4a ในโฟลเดอร์นี้ถูกฝังลงใน index.html แล้ว (base64 ใน `<script id="sound-data">`)
+ถ้าเปลี่ยนไฟล์ ให้รันสคริปต์ฝังใหม่ หรือแทนที่ค่าใน sound-data ด้วยตัวเอง
 
-| ไฟล์            | เครื่องดนตรี   |
-|-----------------|----------------|
-| klongyao.mp3    | กลองยาว        |
-| ching.mp3       | ฉิ่ง            |
-| krap.mp3        | กรับ            |
-| thon.mp3        | โทน–รำมะนา     |
-| pichawa.mp3     | ปี่ชวา          |
-| chab.mp3        | ฉาบ             |
-| mong.mp3        | โหม่ง           |
-| klongkhaek.mp3  | กลองแขก        |
+| ไฟล์            | ไพ่           | ที่มา (Freesound)                              | สัญญาอนุญาต |
+|-----------------|---------------|------------------------------------------------|-------------|
+| ching.m4a       | ฉิ่ง           | Chhỉng01.wav — SieuAmThanh #396612 (ฉิ่งไทยจริง)  | CC0         |
+| mong.m4a        | โหม่ง          | Temple Gong 2 — kerozenne #803159 (ฆ้องวัดในไทย)  | CC0         |
+| krap.m4a        | กรับ           | Clave.wav — PanPiper5 #659912                   | CC0         |
+| chab.m4a        | ฉาบ            | Finger cymbals.WAV — Luc Henrion #439616         | CC0         |
+| thon.m4a        | โทน–รำมะนา     | bendir_basicStrokes.wav — barisbozkurt #140291  | CC0         |
+| klongyao.m4a    | กลองยาว        | Djembe Bass.wav — PanPiper5 #659911              | CC0         |
+| klongkhaek.m4a  | กลองแขก        | DHOLAK (BASS SKIN) — curesforbrokenhearts #536872 | CC0        |
+| pichawa.m4a     | ปี่ชวา          | zurna_0001 4 shots — cdrk #18661                 | CC BY 4.0   |
 
-แนะนำ: ตัดให้สั้น 0.5–2 วินาที, mono, 44.1 kHz, mp3 128 kbps ขนาดไฟล์ละไม่เกิน ~100 KB
-ไพ่หมวด "เพลงพื้นบ้าน" จะใช้เสียง krap หรือ ching ตอนพลิก
+`raw/` เก็บไฟล์ preview mp3 ต้นฉบับจาก Freesound ก่อนตัด/ปรับความดัง
+ไพ่หมวด "เพลงพื้นบ้าน" ใช้เสียงกรับตอนพลิก

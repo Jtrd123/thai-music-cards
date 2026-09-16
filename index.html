@@ -585,16 +585,15 @@
       },
     };
   })();
-  // AudioContext เริ่มได้หลังผู้ใช้แตะหน้าจอครั้งแรก จึงถอดรหัสตอนนั้น
-  const armSamples = () => { Samples.preload(); document.removeEventListener('pointerdown', armSamples); document.removeEventListener('keydown', armSamples); };
-  document.addEventListener('pointerdown', armSamples); document.addEventListener('keydown', armSamples);
+  // ถอดรหัสทันทีตั้งแต่โหลดหน้า (decode ทำได้แม้ AudioContext ยัง suspended) จะได้พร้อมตั้งแต่ไพ่ใบแรก
+  Samples.preload();
 
-  // เลือกเสียงตอนพลิกไพ่: เครื่องดนตรี → เสียงจริงของชิ้นนั้น, เพลง → กรับ/ฉิ่งจริง, ไม่มีไฟล์ → ฉิ่งสังเคราะห์
+  // ตอนพลิกไพ่มีแต่เสียงเครื่องดนตรีจริงเท่านั้น ไม่มีเสียงพลิก/เสียงสังเคราะห์
+  // เครื่องดนตรี → เสียงจริงของชิ้นนั้น, เพลงพื้นบ้าน → กรับ (เครื่องให้จังหวะของเพลงพื้นบ้าน)
   function playFlip(item) {
     if (!Snd.on) return;
-    if (item.kind === 'inst' && Samples.play(item.id)) return;
-    if (item.kind === 'song') for (const id of SAMPLE_FOR_SONG) if (Samples.play(id, .6)) return;
-    Snd.flip();
+    if (item.kind === 'inst') { Samples.play(item.id); return; }
+    for (const id of SAMPLE_FOR_SONG) if (Samples.play(id, .6)) return;
   }
 
   // ---------- สถานะเกม ----------
@@ -748,7 +747,7 @@
   soundBtn.addEventListener('click', () => {
     Snd.on = !Snd.on; paintSound();
     try { localStorage.setItem('sound', Snd.on ? 'on' : 'off'); } catch (_) {}
-    if (Snd.on) Snd.flip();
+    if (Snd.on) Samples.play('ching') || Snd.flip();
   });
   paintSound();
   document.getElementById('restart').addEventListener('click', startGame);

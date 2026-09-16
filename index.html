@@ -553,10 +553,8 @@
 
   // ---------- เสียงจริงของเครื่องดนตรี (ถ้ามีไฟล์ใน sounds/) ----------
   // วางไฟล์ชื่อ <id>.mp3 / .ogg / .wav ในโฟลเดอร์ sounds/ เช่น sounds/ching.mp3
-  // ไพ่ที่ไม่มีไฟล์จะใช้เสียงสังเคราะห์แทน  ไพ่หมวด "เพลง" ใช้เสียงกรับ/ฉิ่ง
-  // ไฟล์เสียงถูกฝังไว้ท้ายหน้าใน <script id="sound-data"> (AAC/m4a base64, รวม ~140 KB)
+  // ไพ่ที่ไม่มีไฟล์จะใช้เสียงสังเคราะห์แทน    // ไฟล์เสียงถูกฝังไว้ท้ายหน้าใน <script id="sound-data"> (AAC/m4a base64, รวม ~140 KB)
   // ที่มา: Freesound (CC0 ยกเว้นปี่ชวา CC BY) ดูรายละเอียดใน sounds/README.md และเครดิตท้ายเกม
-  const SAMPLE_FOR_SONG = ['krap', 'ching'];
   const Samples = (() => {
     const bank = {};           // id -> AudioBuffer
     let ctx = null;
@@ -588,12 +586,9 @@
   // ถอดรหัสทันทีตั้งแต่โหลดหน้า (decode ทำได้แม้ AudioContext ยัง suspended) จะได้พร้อมตั้งแต่ไพ่ใบแรก
   Samples.preload();
 
-  // ตอนพลิกไพ่มีแต่เสียงเครื่องดนตรีจริงเท่านั้น ไม่มีเสียงพลิก/เสียงสังเคราะห์
-  // เครื่องดนตรี → เสียงจริงของชิ้นนั้น, เพลงพื้นบ้าน → กรับ (เครื่องให้จังหวะของเพลงพื้นบ้าน)
+  // ตอนพลิกไพ่มีแต่เสียงเครื่องดนตรีจริงเท่านั้น ไพ่เพลงพื้นบ้านเงียบ
   function playFlip(item) {
-    if (!Snd.on) return;
-    if (item.kind === 'inst') { Samples.play(item.id); return; }
-    for (const id of SAMPLE_FOR_SONG) if (Samples.play(id, .6)) return;
+    if (Snd.on && item.kind === 'inst') Samples.play(item.id);
   }
 
   // ---------- สถานะเกม ----------

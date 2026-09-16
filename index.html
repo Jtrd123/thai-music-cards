@@ -684,22 +684,25 @@
         a.classList.add('matched'); second.classList.add('matched');
         a.classList.remove('flipped'); second.classList.remove('flipped');
         found++; foundEl.textContent = `${found}/${pairs}`;
-        Snd.match();
-        setFact(ITEMS.find(i => i.id === a.dataset.id));
+        const it = ITEMS.find(i => i.id === a.dataset.id);
+        // คู่เครื่องดนตรี → ตีเครื่องนั้นซ้ำอีกครั้งเป็นการยืนยัน (ไม่ให้เสียงสังเคราะห์กลบ) / คู่เพลง → กลองสังเคราะห์
+        if (!(Snd.on && it.kind === 'inst' && Samples.play(it.id))) Snd.match();
+        setFact(it);
         lock = false;
         if (found === pairs) setTimeout(win, 500);
       }, 300);
     } else {
       lock = true;
+      // ปล่อยให้เสียงเครื่องดนตรีของใบที่สองดังเต็มก่อน ค่อยเขย่าและ "ฉับ" ตอนพลิกกลับ
       setTimeout(() => {
         a.classList.add('shake'); second.classList.add('shake');
-        Snd.miss();
         setTimeout(() => {
           a.classList.remove('flipped', 'shake'); second.classList.remove('flipped', 'shake');
           a.setAttribute('aria-label', 'ไพ่ปิด'); second.setAttribute('aria-label', 'ไพ่ปิด');
+          Snd.miss();
           lock = false;
         }, 420);
-      }, 550);
+      }, 800);
     }
   });
 
